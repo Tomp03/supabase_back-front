@@ -1,1 +1,86 @@
+<!DOCTYPE html>
+<html lang="en">
 
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="./style.css">
+    <title>Blog de l'enfer</title>
+</head>
+
+<body>
+
+    <div class='container'>
+        <div class='section'>
+            <form id='sign-up'>
+                <h3>Sign Up</h3>
+                <label>Email</label><input type='email' name='email' />
+                <label>Password</label><input type='password' name='password' />
+                <input type='submit' id="create">
+            </form>
+        </div>
+        <div class='section'>
+            <form id='log-in'>
+                <h3>Log In</h3>
+                <label>Email</label><input type='email' name='email' />
+                <label>Password</label><input type='password' name='password' />
+                <input type='submit' id="login">
+            </form>
+        </div>
+        <div class="display" style="display:none">
+            <div class='section token'>
+                <form id='validate'>
+                    <h3>Access Token</h3>
+                    <input readonly type='text' id='access-token' /> <small>Default expiry is 60 minutes</small>
+                    <h3>Refresh Token</h3>
+                    <input readonly type='text' id='refresh-token' /> <small>Supabase-js will use this to automatically
+                        fetch a new accessToken for you every 60 mins whilst the client is running</small>
+                </form>
+            </div>
+            <div class='section fetch'>
+                <h3>Fetch User Details</h3>
+                <button id='fetch'>Fetch</button>
+            </div>
+            <div class='section'>
+                <h3>Logout</h3>
+                <button id='logout'>Logout</button>
+            </div>
+        </div>
+    </div>
+
+
+
+    <div class="display2" style="display:none">
+        <div class='section'>
+            <h3>Notes (<span id="total"></span>)</h3>
+        </div>
+        <div class="container">
+            <h4 id="loading"></h4>
+            <div class='section'>
+                <table class="table">
+                    <thead>
+                        <tr>
+                            <th>Id</th>
+                            <th>Notes</th>
+                            <th>Created at 📅</th>
+                            <th></th>
+                            <th>Edit</th>
+                            <th>Open</th>
+                            <th>Delete</th>
+                        </tr>
+                    </thead>
+                    <tbody id="tbody"></tbody>
+                </table>
+            </div>
+        </div>
+        <label for="">Create Note</label>
+        <input type="text" name="note" id="note">
+        <button type="submit" id="save">Save</button>
+    </div>
+
+    <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@1"></script>
+    <script src="./script.js"></script>
+</body>
+
+</html>
