@@ -1,8 +1,6 @@
 // Auth
 var supabase = supabase.createClient("https://apbftpkyduywihpstvhv.supabase.co", "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6ImFwYmZ0cGt5ZHV5d2locHN0dmh2Iiwicm9sZSI6ImFub24iLCJpYXQiOjE2NjY2OTk3OTksImV4cCI6MTk4MjI3NTc5OX0.cKGsXOIAbdU32DBd-ruhJp8JgdHQZ2VAwWZM4g3J7yQ");
 
-window.userToken = null;
-
 document.addEventListener("DOMContentLoaded", function (event) {
   var signUpForm = document.querySelector("#sign-up");
   signUpForm.onsubmit = signUpSubmitted.bind(signUpForm);
@@ -22,8 +20,12 @@ const signUpSubmitted = (event) => {
 
   supabase.auth
     .signUp({ email, password })
-    .then((response) => { response.error ? alert(response.error.message) : setToken(response) })
-    .catch((err) => { console.log(err) });
+    .then((response) => {
+      response.error ? console.log(response.error.message) : setToken(response);
+    })
+    .catch((err) => {
+      console.log(err);
+    });
 };
 
 const logInSubmitted = (event) => {
@@ -34,8 +36,12 @@ const logInSubmitted = (event) => {
 
   supabase.auth
     .signIn({ email, password })
-    .then((response) => { response.error ? alert(response.error.message) : setToken(response) })
-    .catch((err) => { console.log(err.response.text) });
+    .then((response) => {
+      response.error ? console.log(response.error.message) : setToken(response);
+    })
+    .catch((err) => {
+      console.log(err.response.text);
+    });
 };
 
 const logoutSubmitted = (event) => {
@@ -47,7 +53,9 @@ const logoutSubmitted = (event) => {
       document.querySelector(".display").style.display = "none";
       console.log("Logout successful");
     })
-    .catch((err) => { console.log(err.response.text) });
+    .catch((err) => {
+      console.log(err.response.text);
+    });
 };
 
 function setToken(response) {
@@ -60,7 +68,6 @@ function setToken(response) {
 }
 
 // CRUD
-
 function getAllNotes() {
   fetch("http://localhost:3000/api/v1/")
     .then((res) => res.json())
@@ -103,7 +110,7 @@ function date(date) {
       break;
   }
 
-  hour == "23" ? (hour = "00") : hour++;
+  hour == "23" ? hour = "00" : hour++;
 
   return `Le ${day} ${b} ${year} à ${hour}:${minutes}`;
 }
@@ -118,7 +125,7 @@ function displayAllNotes(notes) {
       <td>${notes[i].id}</td>
       <td>${notes[i].notes}</td>
       <td>${date(notes[i].created_at)}</td>
-      <td><button id='update' onclick='updateNote(${notes[i].id})'>Edit</button></td>
+      <td><button onclick='updateNote(${notes[i].id})'>Edit</button></td>
       <td><input type="text" name="edit-note" id="${notes[i].id}"></td>
       <td><button onclick='deleteNote(${notes[i].id})'>Delete</button></td>
       </tr>`;
@@ -140,7 +147,9 @@ document.querySelector("#save").addEventListener("click", async function addNote
       });
 
       const data = await response.json();
-      data.status == "201" ? console.log({ method: "POST", res: "Created" }) : console.log({ method: "POST", res: data });
+      data.status == "201"
+        ? console.log({ method: "POST", res: "Created" })
+        : console.log({ method: "POST", res: data });
     } catch (error) {
       console.log(error);
     }
@@ -160,7 +169,9 @@ async function updateNote(id) {
     });
 
     const data = await response.json();
-    data.status == "204" ? console.log({ method: "PATCH", id: id, res: "Updated" }) : console.log({ method: "PATCH", id: id, res: data });
+    data.status == "204"
+      ? console.log({ method: "PATCH", id: id, res: "Updated" })
+      : console.log({ method: "PATCH", id: id, res: data });
   } catch (error) {
     console.log(error);
   }
@@ -173,11 +184,15 @@ async function deleteNote(id) {
     const response = await fetch(`http://localhost:3000/api/v1/${id}`, {
       method: "DELETE",
       headers: { "Content-Type": "application/json" },
-      body: JSON.stringify({ uid: supabase.auth.user().id }),
+      body: JSON.stringify({
+        uid: supabase.auth.user().id,
+      }),
     });
 
     const data = await response.json();
-    data.status == "204" ? console.log({ method: "DELETE", id: id, res: "Deleted" }) : console.log({ method: "DELETE", id: id, res: data });
+    data.status == "204"
+      ? console.log({ method: "DELETE", id: id, res: "Deleted" })
+      : console.log({ method: "DELETE", id: id, res: data });
   } catch (error) {
     console.log(error);
   }
