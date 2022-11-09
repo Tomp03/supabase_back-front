@@ -81,38 +81,39 @@ function date(date) {
   let year = date.slice(0, 4);
   let hour = date.slice(11, 13);
   let minutes = date.slice(14, 16);
-  let b = "";
 
   switch (month) {
-    case "1": b = "Janvier";
+    case "1": month = "Janvier";
       break;
-    case "2": b = "Février";
+    case "2": month = "Février";
       break;
-    case "3": b = "Mars";
+    case "3": month = "Mars";
       break;
-    case "4": b = "Avril";
+    case "4": month = "Avril";
       break;
-    case "5": b = "Mai";
+    case "5": month = "Mai";
       break;
-    case "6": b = "Juin";
+    case "6": month = "Juin";
       break;
-    case "7": b = "Juillet";
+    case "7": month = "Juillet";
       break;
-    case "8": b = "Août";
+    case "8": month = "Août";
       break;
-    case "9": b = "Septembre";
+    case "9": month = "Septembre";
       break;
-    case "10": b = "Octobre";
+    case "10": month = "Octobre";
       break;
-    case "11": b = "Novembre";
+    case "11": month = "Novembre";
       break;
-    case "12": b = "Décembre";
+    case "12": month = "Décembre";
       break;
   }
 
   hour == "23" ? (hour = "00", day++) : hour++;
+  typeof day === "number" ? day = day.toString() : day;
+  day.length == 1 ? day = `0${day}` : day;
 
-  return `Le ${day} ${b} ${year} à ${hour}:${minutes}`;
+  return `Le ${day} ${month} ${year} à ${hour}:${minutes}`;
 }
 
 function displayAllNotes(notes) {
