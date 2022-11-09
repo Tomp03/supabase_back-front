@@ -110,7 +110,7 @@ function date(date) {
       break;
   }
 
-  hour == "23" ? hour = "00" : hour++;
+  hour == "23" ? (hour = "00", day++) : hour++;
 
   return `Le ${day} ${b} ${year} à ${hour}:${minutes}`;
 }
